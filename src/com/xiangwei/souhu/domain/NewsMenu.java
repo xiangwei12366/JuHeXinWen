@@ -12,12 +12,16 @@ import java.util.ArrayList;
 public class NewsMenu {
 	public int result;
 	private ArrayList<NewsMenuData> data;
-	
-	public class NewsMenuData{
-		public String ctime;
+
+	public class NewsMenuData {
+		public String uniquekey;
 		public String title;
-		public String description;
-		public String picUrl;
+		public String date;
+		public String category;
+		public String author_name;
 		public String url;
+		public String pic_url1;
+		public String pic_url2;
+		public String pic_url3;
 	}
 }

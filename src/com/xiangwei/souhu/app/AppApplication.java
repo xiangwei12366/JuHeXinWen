@@ -2,19 +2,17 @@ package com.xiangwei.souhu.app;
 
 import java.io.File;
 
+import android.app.Application;
+import android.content.Context;
+import android.util.Log;
+
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiscCache;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration.Builder;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.nostra13.universalimageloader.utils.StorageUtils;
 import com.xiangwei.souhu.db.SQLHelper;
-
-import android.app.Application;
-import android.content.Context;
-import android.os.storage.StorageManager;
-import android.util.Log;
 
 public class AppApplication extends Application {
 	private static AppApplication mAppApplication;
@@ -22,6 +20,7 @@ public class AppApplication extends Application {
 
 	@Override
 	public void onCreate() {
+		// TODO Auto-generated method stub
 		super.onCreate();
 		initImageLoader(getApplicationContext());
 		mAppApplication = this;
@@ -34,24 +33,25 @@ public class AppApplication extends Application {
 
 	/** 获取数据库Helper */
 	public SQLHelper getSQLHelper() {
-		if (sqlHelper == null) {
+		if (sqlHelper == null)
 			sqlHelper = new SQLHelper(mAppApplication);
-		}
 		return sqlHelper;
 	}
-	
-	public void onTerminate(){
-		if(sqlHelper != null){
+
+	@Override
+	public void onTerminate() {
+		// TODO Auto-generated method stub
+		if (sqlHelper != null)
 			sqlHelper.close();
-			super.onTerminate();//整体摧毁时调用此方法
-		}
+		super.onTerminate();
+		// 整体摧毁的时候调用这个方法
 	}
 
 	/** 初始化ImageLoader */
 	public static void initImageLoader(Context context) {
 		File cacheDir = StorageUtils.getOwnCacheDirectory(context,
 				"topnews/Cache");// 获取到缓存的目录地址
-		Log.d("cacheDir", cacheDir.getPath());// 打印缓存的路径
+		Log.d("cacheDir", cacheDir.getPath());
 		// 创建配置ImageLoader(所有的选项都是可选的,只使用那些你真的想定制)，这个可以设定在APPLACATION里面，设置为全局的配置参数
 		ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(
 				context)
@@ -81,7 +81,7 @@ public class AppApplication extends Application {
 				// 30 * 1000)) // connectTimeout (5 s), readTimeout (30 s)超时时间
 				.writeDebugLogs() // Remove for release app
 				.build();
-		// 全局初始化此配置
-		ImageLoader.getInstance().init(config);
+		// Initialize ImageLoader with configuration.
+		ImageLoader.getInstance().init(config);// 全局初始化此配置
 	}
 }

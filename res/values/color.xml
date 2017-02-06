@@ -1,4 +1,115 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <color name="title_text_color">#ffffffff</color>
+    <color name="left_drawer_no_login_tip_text">#ffb8b8b8</color>
+    <color name="left_drawer_item_text_normal">#ffd4d4d4</color>
+    <color name="left_drawer_item_text_pressed">#ff4e4e4e</color>
+    <color name="left_drawer_item_text_tip">#fffe3232</color>
+    <color name="left_drawer_item_bg_normal">#ff393939</color>
+    <color name="left_drawer_item_bg_pressed">#ff292929</color>
+    <color name="left_drawer_item_line">#ff272727</color>
+    <color name="left_drawer_offline_hint">#ff6699cc</color>
+    <color name="left_drawer_night_mode_text">#ffb8b8b8</color>
+    <color name="left_drawer_user_name">#ffd4d4d4</color>
+    <color name="activity_bg_color">#fff5f5f5</color>
+    <color name="divider_day">#ffdddddd</color>
+    <color name="white">#ffffffff</color>
+    <color name="image_loading_bg">#ffefefef</color>
+    <color name="feed_hint_normal">#fff0f0f0</color>
+    <color name="feed_hint_normal_night">#ff252525</color>
+    <color name="feed_hint_pressed">#ffeaeaea</color>
+    <color name="feed_hint_pressed_night">#ff191919</color>
+    <color name="offline_text">#ff4bbff6</color>
+    <color name="default_text">#ff454545</color>
+    <color name="default_text_night">#ff747474</color>
+    <color name="ss_comment_time">#ff999999</color>
+    <color name="item_title_normal">#ff444444</color>
+    <color name="item_title_disabled">#ff888888</color>
+    <color name="item_local">#ffffffff</color>
+    <color name="item_abstract_normal">#ff444444</color>
+    <color name="item_abstract_disabled">#ff929292</color>
+    <color name="notify_view_divider">#66ffffff</color>
+    <color name="list_notify_text">#ffffffff</color>
+    <color name="dislike_bg_normal">#ff3e3e3e</color>
+    <color name="dislike_bg_pressed">#ff2b2b2b</color>
+    <color name="dislike_line_color">#ff252525</color>
+    <color name="list_city_category_tip_text">#ff444444</color>
+    <color name="list_city_category_hint_text">#ff999999</color>
+    <color name="list_city_item_text">#ff444444</color>
+    <color name="category_subscribe_text">#ffffffff</color>
+    <color name="subscribe_item_text_color_pressed">#ffb9b9b9</color>
+    <color name="title_text_color_night">#ffb1b1b1</color>
+    <color name="transparent">#00000000</color>
+
+    <item name="category_subscribe_text_night" type="color">@color/default_text_night</item>
+    <item name="subscribe_item_text_color_normal_night" type="color">@color/default_text_night</item>
+
+    <color name="subscribe_item_text_color_pressed_night">#ff303030</color>
+    <color name="subscribe_item_focused_stroke">#ffd9d9d9</color>
+    <color name="subscribe_item_drag_stroke">#ffd2d2d2</color>
+    <color name="subscribe_item_drag_bg">#fff5f5f5</color>
+    <color name="subscribe_item_drag_stroke_night">#ff464646</color>
+    <color name="subscribe_item_drag_bg_night">#ff252525</color>
+    <color name="subscribe_item_selected_bg">#ffffffff</color>
+    <color name="subscribe_item_selected_stroke">#ffcc3131</color>
+    <color name="subscribe_item_disabled_bg">#ffefefef</color>
+    <color name="subscribe_item_disabled_stroke">#ffd9d9d9</color>
+    <color name="subscribe_item_pressed_bg">#fff9f9f9</color>
+    <color name="subscribe_item_pressed_stroke">#ffcdcdcd</color>
+    <color name="subscribe_item_normal_bg">#fff5f5f5</color>
+    <color name="subscribe_item_normal_stroke">#ffcdcdcd</color>
+    <color name="subscribe_item_focused_bg_night">#ff252525</color>
+    <color name="subscribe_item_focused_stroke_night">#ff464646</color>
+    <color name="subscribe_item_selected_bg_night">#ff252525</color>
+    <color name="subscribe_item_selected_stroke_night">#ffbc494d</color>
+    <color name="subscribe_item_disabled_bg_night">#ff2b2b2b</color>
+    <color name="subscribe_activity_bg">#ffefefef</color>
+    <color name="subscribe_bg">#fff5f5f5</color>
+    <color name="subscribe_tip_text">#ff2e2e2e</color>
+    <color name="subscribe_seperate_line">#ffcdcdcd</color>
+    <color name="activity_bg_color_night">#ff1a1a1a</color>
+    <color name="detail_activity_bg_color">#fff6f7f7</color>
+    <color name="detail_activity_bg_color_night">#ff1a1a1a</color>
+    <color name="item_ad_download_bg_normal">#e5eeeeee</color>
+    <color name="item_ad_download_bg_pressed">#e5f9f9f9</color>
+    <color name="item_ad_download_text">#ff696969</color>
+    <color name="item_ad_download_bg_normal_night">#e52a2a2a</color>
+    <color name="item_ad_download_bg_pressed_night">#e51e1e1e</color>
+
+    <item name="action_comment_text" type="color">@color/title_text_color</item>
+    <item name="action_comment_text_night" type="color">@color/title_text_color_night</item>
+
+    <color name="action_comment_bg">#ffcc3131</color>
+    <color name="action_comment_bg_night">#ff791d1d</color>
+
+    <item name="toolbar_bg" type="color">@color/activity_bg_color</item>
+    <item name="toolbar_bg_night" type="color">@color/activity_bg_color_night</item>
+
+    <color name="divider_left_bg">#ffacacac</color>
+    <color name="divider_left_bg_night">#ff000000</color>
+    <color name="divider_right_bg">#ffffffff</color>
+    <color name="divider_right_bg_night">#ff505050</color>
+    <color name="divider_night">#ff303030</color>
+    <color name="detail_divider_day">#ffb4b4b4</color>
+    <color name="detail_divider_night">#ff464646</color>
+    <color name="system_message_name">#fffe3232</color>
+    <color name="system_message_name_night">#ffbc494d</color>
+    <color name="drawer_right_bg">#ff393939</color>
+    <color name="drawer_divider">#ff303030</color>
+    <color name="drawer_divider_left">#ff303030</color>
+    <color name="drawer_divider_right">#ff505050</color>
+    <color name="drawer_description_text">#ff5a729a</color>
+    <color name="drawer_text">#ffc3c3c3</color>
+    <color name="drawer_text_little">#ff727272</color>
+    <color name="drawer_article_title_bg">#ff444444</color>
+    <color name="drawer_article_title_bg_day">#ffffffff</color>
+    <color name="drawer_article_title_bg_night">#ff252525</color>
+    <color name="homepage_name_text">#ff252525</color>
+    <color name="homepage_signature_text">#ff303030</color>
+    <color name="bg_row_border_night">#ff444444</color>
+    <color name="bg_login_page">#fff9f9f9</color>
+    <color name="bg_full_image">#ff000000</color>
+    <color name="detail_title_text_color">#ff999999</color>
+
 </resources>
