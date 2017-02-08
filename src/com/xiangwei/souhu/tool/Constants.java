@@ -70,6 +70,8 @@ public class Constants {
 		}
 		return newsList;
 	}
+	
+	
 
 	/** mark=0 ：推荐 */
 	public final static int mark_recom = 0;

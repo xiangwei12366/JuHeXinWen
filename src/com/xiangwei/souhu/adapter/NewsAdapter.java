@@ -6,7 +6,6 @@ import java.util.List;
 
 import android.app.Activity;
 import android.graphics.drawable.ColorDrawable;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,14 +18,13 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
-import android.widget.RelativeLayout;
 import android.widget.SectionIndexer;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.xiangwei.souhu.R;
-import com.xiangwei.souhu.bean.NewsEntity;
+import com.xiangwei.souhu.domain.Data;
 import com.xiangwei.souhu.tool.Constants;
 import com.xiangwei.souhu.tool.DataTools;
 import com.xiangwei.souhu.tool.Options;
@@ -35,7 +33,7 @@ import com.xiangwei.souhu.view.HeadListView.HeaderAdapter;
 
 public class NewsAdapter extends BaseAdapter implements SectionIndexer,
 		HeaderAdapter, OnScrollListener {
-	ArrayList<NewsEntity> newsList;
+	ArrayList<Data> datas;
 	Activity activity;
 	LayoutInflater inflater = null;
 	protected ImageLoader imageLoader = ImageLoader.getInstance();
@@ -44,42 +42,46 @@ public class NewsAdapter extends BaseAdapter implements SectionIndexer,
 	private List<Integer> mPositions;
 	private List<String> mSections;
 
-	public NewsAdapter(Activity activity, ArrayList<NewsEntity> newsList) {
+	public NewsAdapter(Activity activity, ArrayList<Data> mData) {
 		this.activity = activity;
-		this.newsList = newsList;
+		this.datas = mData;
 		inflater = LayoutInflater.from(activity);
 		options = Options.getListOptions();
 		initPopWindow();
 		initDateHead();
 	}
-	
+
 	private void initDateHead() {
 		mSections = new ArrayList<String>();
-		mPositions= new ArrayList<Integer>();
-		for(int i = 0; i <newsList.size();i++){
-			if(i == 0){
-				mSections.add(DataTools.getSection(String.valueOf(newsList.get(i).getPublishTime())));
+		mPositions = new ArrayList<Integer>();
+		for (int i = 0; i < datas.size(); i++) {
+			if (i == 0) {
+//				mSections.add(DataTools.getSection(String.valueOf(datas.get(i)
+//						.getDate())));
 				mPositions.add(i);
 				continue;
 			}
-			if(i != newsList.size()){
-				if(!newsList.get(i).getPublishTime().equals(newsList.get(i - 1).getPublishTime())){
-					mSections.add(DataTools.getSection(String.valueOf(newsList.get(i).getPublishTime())));
+			if (i != datas.size()) {
+				if (!datas.get(i).getDate().equals(datas.get(i - 1).getDate())) {
+					// mSections.add(DataTools.getSection(String.valueOf(datas
+					// .get(i).getDate())));
 					mPositions.add(i);
 				}
 			}
 		}
 	}
-	
+
 	@Override
 	public int getCount() {
-		return newsList == null ? 0 : newsList.size();
+		return datas == null ? 0 : datas.size();
 	}
 
 	@Override
-	public NewsEntity getItem(int position) {
-		if (newsList != null && newsList.size() != 0) {
-			return newsList.get(position);
+	public Data getItem(int position) {
+		if (datas != null && datas.size() != 0) {
+			System.out.println(datas.get(position));
+			return datas.get(position);
+
 		}
 		return null;
 	}
@@ -91,148 +93,36 @@ public class NewsAdapter extends BaseAdapter implements SectionIndexer,
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		// TODO Auto-generated method stub
 		ViewHolder mHolder;
 		View view = convertView;
-		if (view == null) {
+//		if (view == null) {
 			view = inflater.inflate(R.layout.list_item, null);
 			mHolder = new ViewHolder();
 			mHolder.item_layout = (LinearLayout) view
 					.findViewById(R.id.item_layout);
-			mHolder.comment_layout = (RelativeLayout) view
-					.findViewById(R.id.comment_layout);
-			mHolder.item_title = (TextView) view.findViewById(R.id.item_title);
-			mHolder.item_source = (TextView) view
+			mHolder.title = (TextView) view.findViewById(R.id.item_title);
+			mHolder.date = (TextView) view.findViewById(R.id.publish_time);
+			mHolder.author_name = (TextView) view
 					.findViewById(R.id.item_source);
-			mHolder.list_item_local = (TextView) view
-					.findViewById(R.id.list_item_local);
-			mHolder.comment_count = (TextView) view
-					.findViewById(R.id.comment_count);
-			mHolder.publish_time = (TextView) view
-					.findViewById(R.id.publish_time);
-			mHolder.item_abstract = (TextView) view
-					.findViewById(R.id.item_abstract);
-			mHolder.alt_mark = (ImageView) view.findViewById(R.id.alt_mark);
-			mHolder.right_image = (ImageView) view
-					.findViewById(R.id.right_image);
-			mHolder.item_image_layout = (LinearLayout) view
-					.findViewById(R.id.item_image_layout);
-			mHolder.item_image_0 = (ImageView) view
-					.findViewById(R.id.item_image_0);
-			mHolder.item_image_1 = (ImageView) view
-					.findViewById(R.id.item_image_1);
-			mHolder.item_image_2 = (ImageView) view
-					.findViewById(R.id.item_image_2);
-			mHolder.large_image = (ImageView) view
-					.findViewById(R.id.large_image);
-			mHolder.popicon = (ImageView) view.findViewById(R.id.popicon);
-			mHolder.comment_content = (TextView) view
-					.findViewById(R.id.comment_content);
-			mHolder.right_padding_view = (View) view
-					.findViewById(R.id.right_padding_view);
-			// 头部的日期部分
-			mHolder.layout_list_section = (LinearLayout) view
-					.findViewById(R.id.layout_list_section);
-			mHolder.section_text = (TextView) view
-					.findViewById(R.id.section_text);
-			mHolder.section_day = (TextView) view
-					.findViewById(R.id.section_day);
-
-			view.setTag(mHolder);
-		} else {
-			mHolder = (ViewHolder) view.getTag();
-		}
+			mHolder.pic_url1 = (ImageView) view.findViewById(R.id.item_image_0);
+			mHolder.pic_url2 = (ImageView) view.findViewById(R.id.item_image_1);
+			mHolder.pic_url3 = (ImageView) view.findViewById(R.id.item_image_2);
+//		} else {
+//			mHolder = (ViewHolder) view.getTag();
+//		}
 		// 获取position对应的数据
-		NewsEntity news = (NewsEntity) getItem(position);
-		mHolder.item_title.setText(news.getTitle());
-		mHolder.item_source.setText(news.getSource());
-		mHolder.comment_count.setText("评论" + news.getCommentNum());
-		mHolder.publish_time.setText(news.getPublishTime() + "小时前");
-		List<String> imgUrlList = news.getPicList();
-		mHolder.popicon.setVisibility(View.VISIBLE);
-		mHolder.comment_count.setVisibility(View.VISIBLE);
-		mHolder.right_padding_view.setVisibility(View.VISIBLE);
-		if (imgUrlList != null && imgUrlList.size() != 0) {
-			if (imgUrlList.size() == 1) {
-				mHolder.item_image_layout.setVisibility(View.GONE);
-				// 是否是大图
-				if (news.getIsLarge()) {
-					mHolder.large_image.setVisibility(View.VISIBLE);
-					mHolder.right_image.setVisibility(View.GONE);
-					imageLoader.displayImage(imgUrlList.get(0),
-							mHolder.large_image, options);
-					mHolder.popicon.setVisibility(View.GONE);
-					mHolder.comment_count.setVisibility(View.GONE);
-					mHolder.right_padding_view.setVisibility(View.GONE);
-				} else {
-					mHolder.large_image.setVisibility(View.GONE);
-					mHolder.right_image.setVisibility(View.VISIBLE);
-					imageLoader.displayImage(imgUrlList.get(0),
-							mHolder.right_image, options);
-				}
-			} else {
-				mHolder.large_image.setVisibility(View.GONE);
-				mHolder.right_image.setVisibility(View.GONE);
-				mHolder.item_image_layout.setVisibility(View.VISIBLE);
-				imageLoader.displayImage(imgUrlList.get(0),
-						mHolder.item_image_0, options);
-				imageLoader.displayImage(imgUrlList.get(1),
-						mHolder.item_image_1, options);
-				imageLoader.displayImage(imgUrlList.get(2),
-						mHolder.item_image_2, options);
-			}
-		} else {
-			mHolder.right_image.setVisibility(View.GONE);
-			mHolder.item_image_layout.setVisibility(View.GONE);
-		}
-		// int markResID = getAltMarkResID(news.getMark(),
-		// news.getCollectStatus());
-		// if (markResID != -1) {
-		// mHolder.alt_mark.setVisibility(View.VISIBLE);
-		// mHolder.alt_mark.setImageResource(markResID);
-		// } else {
-		// mHolder.alt_mark.setVisibility(View.GONE);
-		// }
-		// 判断该新闻概述是否为空
-		if (!TextUtils.isEmpty(news.getNewsAbstract())) {
-			mHolder.item_abstract.setVisibility(View.VISIBLE);
-			mHolder.item_abstract.setText(news.getNewsAbstract());
-		} else {
-			mHolder.item_abstract.setVisibility(View.GONE);
-		}
-		// 判断该新闻是否是特殊标记的，推广等，为空就是新闻
-		if (!TextUtils.isEmpty(news.getLocal())) {
-			mHolder.list_item_local.setVisibility(View.VISIBLE);
-			mHolder.list_item_local.setText(news.getLocal());
-		} else {
-			mHolder.list_item_local.setVisibility(View.GONE);
-		}
-		// 判断评论字段是否为空，不为空显示对应布局
-		if (!TextUtils.isEmpty(news.getComment())) {
-			// news.getLocal() != null &&
-			mHolder.comment_layout.setVisibility(View.VISIBLE);
-			mHolder.comment_content.setText(news.getComment());
-		} else {
-			mHolder.comment_layout.setVisibility(View.GONE);
-		}
-		// 判断该新闻是否已读
-		if (!news.getReadStatus()) {
-			mHolder.item_layout.setSelected(true);
-		} else {
-			mHolder.item_layout.setSelected(false);
-		}
-		// // 设置+按钮点击效果
-		// mHolder.popicon.setOnClickListener(new popAction(position));
-		// // 头部的相关东西
-		// int section = getSectionForPosition(position);
-		// if (getPositionForSection(section) == position) {
-		// mHolder.layout_list_section.setVisibility(View.VISIBLE);
-		// // head_title.setText(news.getDate());
-		// mHolder.section_text.setText(mSections.get(section));
-		// mHolder.section_day.setText("今天");
-		// } else {
-		// mHolder.layout_list_section.setVisibility(View.GONE);
-		// }
+		Data datas = getItem(position);
+		System.out.println("Data数据++++++++++++" + datas);
+		mHolder.title.setText(datas.getTitle());
+		mHolder.date.setText(datas.getDate());
+		mHolder.author_name.setText(datas.getAuthor_name());
+		imageLoader.displayImage(datas.getThumbnail_pic_s(), mHolder.pic_url1,
+				options);
+		System.out.println("图片地址++++++++++++" + datas.getThumbnail_pic_s());
+		imageLoader.displayImage(datas.getThumbnail_pic_s02(),
+				mHolder.pic_url2, options);
+		imageLoader.displayImage(datas.getThumbnail_pic_s03(),
+				mHolder.pic_url3, options);
 		return view;
 	}
 
@@ -273,20 +163,20 @@ public class NewsAdapter extends BaseAdapter implements SectionIndexer,
 		popupWindow.setAnimationStyle(R.style.PopMenuAnimation);
 		btn_pop_close = (ImageView) popView.findViewById(R.id.btn_pop_close);
 	}
-	
-	/** 
+
+	/**
 	 * 显示popWindow
 	 * */
-	public void showPop(View parent, int x, int y,int postion) {
-		//设置popwindow显示位置
+	public void showPop(View parent, int x, int y, int postion) {
+		// 设置popwindow显示位置
 		popupWindow.showAtLocation(parent, 0, x, y);
-		//获取popwindow焦点
+		// 获取popwindow焦点
 		popupWindow.setFocusable(true);
-		//设置popwindow如果点击外面区域，便关闭。
+		// 设置popwindow如果点击外面区域，便关闭。
 		popupWindow.setOutsideTouchable(true);
 		popupWindow.update();
 		if (popupWindow.isShowing()) {
-			
+
 		}
 		btn_pop_close.setOnClickListener(new OnClickListener() {
 			public void onClick(View paramView) {
@@ -294,59 +184,61 @@ public class NewsAdapter extends BaseAdapter implements SectionIndexer,
 			}
 		});
 	}
-	
-	/** 
+
+	/**
 	 * 每个ITEM中more按钮对应的点击动作
 	 * */
-	public class popAction implements OnClickListener{
+	public class popAction implements OnClickListener {
 		int position;
-		public popAction(int position){
+
+		public popAction(int position) {
 			this.position = position;
 		}
+
 		@Override
 		public void onClick(View v) {
 			int[] arrayOfInt = new int[2];
-			//获取点击按钮的坐标
+			// 获取点击按钮的坐标
 			v.getLocationOnScreen(arrayOfInt);
-	        int x = arrayOfInt[0];
-	        int y = arrayOfInt[1];
-	        showPop(v, x , y, position);
+			int x = arrayOfInt[0];
+			int y = arrayOfInt[1];
+			showPop(v, x, y, position);
 		}
 	}
-	
-	/* 是不是城市频道，  true：是   false :不是*/
+
+	/* 是不是城市频道， true：是 false :不是 */
 	public boolean isCityChannel = false;
-	
-	/* 是不是第一个ITEM，  true：是   false :不是*/
+
+	/* 是不是第一个ITEM， true：是 false :不是 */
 	public boolean isfirst = true;
-	
+
 	/*
 	 * 设置是不是特殊的频道（城市频道）
 	 */
-	public void setCityChannel(boolean iscity){
+	public void setCityChannel(boolean iscity) {
 		isCityChannel = iscity;
 	}
-	
+
 	@Override
 	public void onScrollStateChanged(AbsListView view, int scrollState) {
 		// TODO Auto-generated method stub
-		
+		System.out.println("发生滑动");
 	}
-	
+
 	@Override
 	public void onScroll(AbsListView view, int firstVisibleItem,
 			int visibleItemCount, int totalItemCount) {
 		// TODO Auto-generated method stub
 		if (view instanceof HeadListView) {
 			Log.d("first", "first:" + view.getFirstVisiblePosition());
-			if(isCityChannel){
-				if(view.getFirstVisiblePosition() == 0){
+			if (isCityChannel) {
+				if (view.getFirstVisiblePosition() == 0) {
 					isfirst = true;
-				}else{
+				} else {
 					isfirst = false;
 				}
 				((HeadListView) view).configureHeaderView(firstVisibleItem - 1);
-			}else{
+			} else {
 				((HeadListView) view).configureHeaderView(firstVisibleItem);
 			}
 		}
@@ -356,8 +248,8 @@ public class NewsAdapter extends BaseAdapter implements SectionIndexer,
 	public int getHeaderState(int position) {
 		// TODO Auto-generated method stub
 		int realPosition = position;
-		if(isCityChannel){
-			if(isfirst){
+		if (isCityChannel) {
+			if (isfirst) {
 				return HEADER_GONE;
 			}
 		}
@@ -375,11 +267,11 @@ public class NewsAdapter extends BaseAdapter implements SectionIndexer,
 
 	@Override
 	public void configureHeader(View header, int position, int alpha) {
-		int realPosition = position;
-		int section = getSectionForPosition(realPosition);
-		String title = (String) getSections()[section];
-		((TextView) header.findViewById(R.id.section_text)).setText(title);
-		((TextView) header.findViewById(R.id.section_day)).setText("今天");
+//		int realPosition = position;
+//		int section = getSectionForPosition(realPosition);
+//		String title = (String) getSections()[section];
+//		((TextView) header.findViewById(R.id.section_text)).setText(title);
+//		((TextView) header.findViewById(R.id.section_day)).setText("今天");
 	}
 
 	@Override
@@ -407,41 +299,18 @@ public class NewsAdapter extends BaseAdapter implements SectionIndexer,
 
 	static class ViewHolder {
 		LinearLayout item_layout;
-		// title
-		TextView item_title;
-		// 图片源
-		TextView item_source;
-		// 类似推广之类的标签
-		TextView list_item_local;
-		// 评论数量
-		TextView comment_count;
-		// 发布时间
-		TextView publish_time;
-		// 新闻摘要
-		TextView item_abstract;
-		// 右上方TAG标记图片
-		ImageView alt_mark;
-		// 右边图片
-		ImageView right_image;
-		// 3张图片布局
-		LinearLayout item_image_layout; // 3张图片时候的布局
-		ImageView item_image_0;
-		ImageView item_image_1;
-		ImageView item_image_2;
-		// 大图的图片的话布局
-		ImageView large_image;
-		// pop按钮
-		ImageView popicon;
-		// 评论布局
-		RelativeLayout comment_layout;
-		TextView comment_content;
-		// paddingview
-		View right_padding_view;
-
-		// 头部的日期部分
-		LinearLayout layout_list_section;
-		TextView section_text;
-		TextView section_day;
+		/** 新闻item标题 */
+		TextView title;
+		/** 新闻更新日期 */
+		TextView date;
+		/** 新闻来源-网站 */
+		TextView author_name;
+		/** 新闻图片1 */
+		ImageView pic_url1;
+		/** 新闻图片2 */
+		ImageView pic_url2;
+		/** 新闻图片3 */
+		ImageView pic_url3;
 	}
 
 }

@@ -25,9 +25,9 @@ public class NewsDetailsService {
 			Element element = null;
 			if (TextUtils.isEmpty(url)) {
 				data = "";
-				element = document.getElementById("memberArea");
+				element = document.getElementById("content");
 			} else {
-				element = document.getElementById("artibody");
+				element = document.getElementById("content");
 			}
 			if (element != null) {
 				data = data + element.toString();

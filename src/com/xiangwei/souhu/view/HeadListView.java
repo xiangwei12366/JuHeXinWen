@@ -103,7 +103,7 @@ public class HeadListView extends ListView {
 				y = 0;
 				alpha = MAX_ALPHA;
 			}
-			mAdapter.configureHeader(mHeaderView, position, alpha);
+//			mAdapter.configureHeader(mHeaderView, position, alpha);
 			if (mHeaderView.getTop() != y) {
 				mHeaderView.layout(0, y, mHeaderViewWidth, mHeaderViewHeight
 						+ y);
