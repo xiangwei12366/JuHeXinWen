@@ -29,10 +29,13 @@ public class ChannelManage {
 		defaultUserChannels.add(new ChannelItem(1, "头条", 1, 1));
 		defaultUserChannels.add(new ChannelItem(2, "社会", 2, 1));
 		defaultUserChannels.add(new ChannelItem(3, "国内", 3, 1));
-		defaultUserChannels.add(new ChannelItem(4, "娱乐", 4, 1));
-		defaultUserChannels.add(new ChannelItem(5, "体育", 5, 1));
-		defaultUserChannels.add(new ChannelItem(6, "军事", 6, 1));
+		defaultUserChannels.add(new ChannelItem(4, "国际", 4, 1));
+		defaultUserChannels.add(new ChannelItem(5, "娱乐", 5, 1));
+		defaultUserChannels.add(new ChannelItem(6, "体育", 6, 1));
+//		defaultUserChannels.add(new ChannelItem(7, "军事", 7, 1));
 		defaultUserChannels.add(new ChannelItem(7, "科技", 7, 1));
+		defaultUserChannels.add(new ChannelItem(8, "财经", 8, 1));
+		defaultUserChannels.add(new ChannelItem(9, "时尚", 9, 1));
 		
 	}
 
@@ -79,7 +82,7 @@ public class ChannelManage {
 				navigate.setSelected(Integer.valueOf(maplist.get(i).get(SQLHelper.SELECTED)));
 				list.add(navigate);
 			}
-			return list;
+			return defaultUserChannels;
 		}
 		initDefaultChannel();
 		return defaultUserChannels;

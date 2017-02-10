@@ -2,13 +2,13 @@
 
     <!--
         Base application theme, dependent on API level. This theme is replaced
-        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
+        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
     -->
     <style name="AppBaseTheme" parent="android:Theme.Light">
         <!--
             Theme customizations available in newer API levels can go in
             res/values-vXX/styles.xml, while customizations related to
-            backward-compatibility can go here.
+            backward-compatibility can go here.
         -->
     </style>
 
@@ -72,6 +72,15 @@
     <style name="left_drawer_count" parent="@style/top_update_count">
         <item name="android:textSize">8.0sp</item>
         <item name="android:textColor">#ff000000</item>
+    </style>
+
+    <style name="profile_drawer_name">
+        <item name="android:textSize">16.0sp</item>
+        <item name="android:textColor">@color/drawer_text</item>
+    </style>
+
+    <style name="right_drawer_top_count" parent="@style/top_update_count">
+        <item name="android:textColor">#ffffffff</item>
     </style>
 
     <style name="item_title">
@@ -240,8 +249,8 @@
     <style name="deail_title_text_style" parent="@style/title_text_style">
         <item name="android:textColor">@color/detail_title_text_color</item>
     </style>
-    
-     <style name="full_image_progressbar" parent="@android:style/Widget.ProgressBar.Large">
+
+    <style name="full_image_progressbar" parent="@android:style/Widget.ProgressBar.Large">
         <item name="android:indeterminateDrawable">@drawable/progress_large_holo</item>
     </style>
 
@@ -254,8 +263,8 @@
         <item name="android:textSize">12.0sp</item>
         <item name="android:textColor">#ffeeeeee</item>
     </style>
-    
-     <style name="toolbar_action">
+
+    <style name="toolbar_action">
         <item name="android:gravity">center</item>
         <item name="android:layout_gravity">center</item>
         <item name="android:layout_width">wrap_content</item>

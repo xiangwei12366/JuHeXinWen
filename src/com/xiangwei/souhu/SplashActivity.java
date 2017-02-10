@@ -3,6 +3,7 @@ package com.xiangwei.souhu;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 import android.view.animation.AnimationSet;
@@ -26,6 +27,7 @@ public class SplashActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_splash);
 		ButterKnife.inject(this);
 
@@ -37,7 +39,7 @@ public class SplashActivity extends Activity {
 		
 		//位移动画
 		TranslateAnimation animTran = new TranslateAnimation(0, 0, 480, 0);
-		animTran.setDuration(1000);
+		animTran.setDuration(500);
 		animTran.setFillAfter(true);
 		
 		//动画集合

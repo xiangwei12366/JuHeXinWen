@@ -9,13 +9,16 @@
         android:layout_height="match_parent" />
 
     <Button
+        style="@drawable/bg_button_selector"
         android:id="@+id/bt_splash"
         android:layout_width="@dimen/button_splash_width"
         android:layout_height="@dimen/button_splash_height"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="60dp"
+        android:background="@drawable/bg_button"
         android:text="@string/bt_splash"
+        android:visibility="gone"
         android:textSize="@dimen/text_size_15" />
 
     <RelativeLayout

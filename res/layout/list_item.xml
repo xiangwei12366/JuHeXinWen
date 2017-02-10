@@ -6,8 +6,6 @@
     android:background="@drawable/newsbg_listpage"
     android:orientation="vertical" >
 
-    <include layout="@layout/list_item_section" />
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

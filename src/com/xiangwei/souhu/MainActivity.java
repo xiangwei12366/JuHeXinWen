@@ -29,7 +29,16 @@ import com.xiangwei.souhu.app.AppApplication;
 import com.xiangwei.souhu.bean.ChannelItem;
 import com.xiangwei.souhu.bean.ChannelManage;
 import com.xiangwei.souhu.db.SQLHelper;
-import com.xiangwei.souhu.fragment.NewsFragment;
+import com.xiangwei.souhu.fragment.CaijingFragment;
+import com.xiangwei.souhu.fragment.GuojiFragment;
+import com.xiangwei.souhu.fragment.GuoneiFragment;
+import com.xiangwei.souhu.fragment.JunshiFragment;
+import com.xiangwei.souhu.fragment.KejiFragment;
+import com.xiangwei.souhu.fragment.ShehuiFragment;
+import com.xiangwei.souhu.fragment.ShishangFragment;
+import com.xiangwei.souhu.fragment.TiyuFragment;
+import com.xiangwei.souhu.fragment.TopFragment;
+import com.xiangwei.souhu.fragment.YuleFragment;
 import com.xiangwei.souhu.tool.BaseTools;
 import com.xiangwei.souhu.view.ColumnHorizontalScrollView;
 import com.xiangwei.souhu.view.DrawerView;
@@ -132,7 +141,32 @@ public class MainActivity extends FragmentActivity {
 				}
 			}
 		});
+		initFragmentList();
 		setChangelView();
+	}
+
+	private void initFragmentList() {
+		fragmentList = new ArrayList<Fragment>();
+		TopFragment topFragment = new TopFragment();// 头条
+		ShehuiFragment shehuiFragment = new ShehuiFragment();// 社会
+		GuoneiFragment guoneiFragment = new GuoneiFragment();// 国内
+		GuojiFragment guojiFragment = new GuojiFragment();// 国际
+		YuleFragment yuleFragment = new YuleFragment();// 娱乐
+		TiyuFragment tiyuFragment = new TiyuFragment();// 体育
+		JunshiFragment junshiFragment = new JunshiFragment();// 军事
+		KejiFragment kejiFragment = new KejiFragment();// 科技
+		CaijingFragment caijingFragment = new CaijingFragment();// 财经
+		ShishangFragment shishangFragment = new ShishangFragment();// 时尚
+		fragmentList.add(topFragment);
+		fragmentList.add(shehuiFragment);
+		fragmentList.add(guoneiFragment);
+		fragmentList.add(guojiFragment);
+		fragmentList.add(yuleFragment);
+		fragmentList.add(tiyuFragment);
+//		fragmentList.add(junshiFragment);
+		fragmentList.add(kejiFragment);
+		fragmentList.add(caijingFragment);
+		fragmentList.add(shishangFragment);
 	}
 
 	/** 当栏目项发生变化的时候调用 */
@@ -151,47 +185,56 @@ public class MainActivity extends FragmentActivity {
 	/** 初始化Column栏目项 */
 	private void initTabColumn() {
 		mRadioGroup_content.removeAllViews();
-		int count =  userChannelList.size();
-		mColumnHorizontalScrollView.setParam(this, mScreenWidth, mRadioGroup_content, shade_left, shade_right, ll_more_columns, rl_column);
-		for(int i = 0; i< count; i++){
-			LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(mItemWidth , LayoutParams.WRAP_CONTENT);
+		int count = userChannelList.size();
+		System.out.println("count总数为===================" + count);
+		mColumnHorizontalScrollView.setParam(this, mScreenWidth,
+				mRadioGroup_content, shade_left, shade_right, ll_more_columns,
+				rl_column);
+		for (int i = 0; i < count; i++) {
+			LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+					mItemWidth, LayoutParams.WRAP_CONTENT);
 			params.leftMargin = 5;
 			params.rightMargin = 5;
-//			TextView localTextView = (TextView) mInflater.inflate(R.layout.column_radio_item, null);
+			// TextView localTextView = (TextView)
+			// mInflater.inflate(R.layout.column_radio_item, null);
 			TextView columnTextView = new TextView(this);
-			columnTextView.setTextAppearance(this, R.style.top_category_scroll_view_item_text);
-//			localTextView.setBackground(getResources().getDrawable(R.drawable.top_category_scroll_text_view_bg));
+			columnTextView.setTextAppearance(this,
+					R.style.top_category_scroll_view_item_text);
+			// localTextView.setBackground(getResources().getDrawable(R.drawable.top_category_scroll_text_view_bg));
 			columnTextView.setBackgroundResource(R.drawable.radio_buttong_bg);
 			columnTextView.setGravity(Gravity.CENTER);
 			columnTextView.setPadding(5, 5, 5, 5);
 			columnTextView.setId(i);
 			columnTextView.setText(userChannelList.get(i).getName());
-			columnTextView.setTextColor(getResources().getColorStateList(R.color.top_category_scroll_text_color_day));
-			if(columnSelectIndex == i){
+			columnTextView.setTextColor(getResources().getColorStateList(
+					R.color.top_category_scroll_text_color_day));
+			if (columnSelectIndex == i) {
 				columnTextView.setSelected(true);
 			}
 			columnTextView.setOnClickListener(new OnClickListener() {
-				
+
 				@Override
 				public void onClick(View v) {
-			          for(int i = 0;i < mRadioGroup_content.getChildCount();i++){
-				          View localView = mRadioGroup_content.getChildAt(i);
-				          if (localView != v)
-				        	  localView.setSelected(false);
-				          else{
-				        	  localView.setSelected(true);
-				        	  mViewPager.setCurrentItem(i);
-				          }
-			          }
-			          Toast.makeText(getApplicationContext(), userChannelList.get(v.getId()).getName(), Toast.LENGTH_SHORT).show();
+					for (int i = 0; i < mRadioGroup_content.getChildCount(); i++) {
+						View localView = mRadioGroup_content.getChildAt(i);
+						if (localView != v)
+							localView.setSelected(false);
+						else {
+							localView.setSelected(true);
+							mViewPager.setCurrentItem(i);
+						}
+					}
+					Toast.makeText(getApplicationContext(),
+							userChannelList.get(v.getId()).getName(),
+							Toast.LENGTH_SHORT).show();
 				}
 			});
-			mRadioGroup_content.addView(columnTextView, i ,params);
+			mRadioGroup_content.addView(columnTextView, i, params);
 		}
 	}
-	
-	/** 
-	 *  选择的Column里面的Tab
+
+	/**
+	 * 选择的Column里面的Tab
 	 * */
 	private void selectTab(int tab_postion) {
 		columnSelectIndex = tab_postion;
@@ -205,8 +248,8 @@ public class MainActivity extends FragmentActivity {
 			// mColumnHorizontalScrollView.smoothScrollTo((position - 2) *
 			// mItemWidth , 0);
 		}
-		//判断是否选中
-		for (int j = 0; j <  mRadioGroup_content.getChildCount(); j++) {
+		// 判断是否选中
+		for (int j = 0; j < mRadioGroup_content.getChildCount(); j++) {
 			View checkView = mRadioGroup_content.getChildAt(j);
 			boolean ischeck;
 			if (j == tab_postion) {
@@ -227,9 +270,9 @@ public class MainActivity extends FragmentActivity {
 			data.putString("text", userChannelList.get(i).getName());
 			data.putInt("id", userChannelList.get(i).getId());
 			// TestFragment testfragment = new TestFragment();
-			NewsFragment newfragment = new NewsFragment();
-			newfragment.setArguments(data);
-			fragments.add(newfragment);
+			Fragment fragment = fragmentList.get(i);
+			fragment.setArguments(data);
+			fragments.add(fragment);
 		}
 		NewsFragmentPagerAdapter mAdapetr = new NewsFragmentPagerAdapter(
 				getSupportFragmentManager(), fragments);
@@ -237,11 +280,11 @@ public class MainActivity extends FragmentActivity {
 		mViewPager.setAdapter(mAdapetr);
 		mViewPager.setOnPageChangeListener(pageListener);
 	}
-	
-	/** 
-	 *  ViewPager切换监听方法
+
+	/**
+	 * ViewPager切换监听方法
 	 * */
-	public OnPageChangeListener pageListener= new OnPageChangeListener(){
+	public OnPageChangeListener pageListener = new OnPageChangeListener() {
 
 		@Override
 		public void onPageScrollStateChanged(int arg0) {
@@ -258,24 +301,26 @@ public class MainActivity extends FragmentActivity {
 			selectTab(position);
 		}
 	};
-	
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
-	
+
 	private long mExitTime;
+	private ArrayList<Fragment> fragmentList;
+
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		// TODO Auto-generated method stub
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
-			if(side_drawer.isMenuShowing() ||side_drawer.isSecondaryMenuShowing()){
+			if (side_drawer.isMenuShowing()
+					|| side_drawer.isSecondaryMenuShowing()) {
 				side_drawer.showContent();
-			}else {
+			} else {
 				if ((System.currentTimeMillis() - mExitTime) > 2000) {
-					Toast.makeText(this, "在按一次退出",
-							Toast.LENGTH_SHORT).show();
+					Toast.makeText(this, "在按一次退出", Toast.LENGTH_SHORT).show();
 					mExitTime = System.currentTimeMillis();
 				} else {
 					finish();
@@ -283,19 +328,19 @@ public class MainActivity extends FragmentActivity {
 			}
 			return true;
 		}
-		//拦截MENU按钮点击事件，让他无任何操作
+		// 拦截MENU按钮点击事件，让他无任何操作
 		if (keyCode == KeyEvent.KEYCODE_MENU) {
 			return true;
 		}
 		return super.onKeyDown(keyCode, event);
 	}
-	
+
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// TODO Auto-generated method stub
 		switch (requestCode) {
 		case CHANNELREQUEST:
-			if(resultCode == CHANNELRESULT){
+			if (resultCode == CHANNELRESULT) {
 				setChangelView();
 			}
 			break;

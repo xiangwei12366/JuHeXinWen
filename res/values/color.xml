@@ -12,6 +12,12 @@
     <color name="left_drawer_offline_hint">#ff6699cc</color>
     <color name="left_drawer_night_mode_text">#ffb8b8b8</color>
     <color name="left_drawer_user_name">#ffd4d4d4</color>
+    <color name="drawer_right_logout_op_layout_bg">#ffbaf2fe</color>
+    <color name="drawer_right_logout_op_layout_bg_night">#ff4a6166</color>
+    <color name="drawer_right_logout_bg">#ffffffff</color>
+    <color name="drawer_right_logout_bg_night">#ff1a1a1a</color>
+    <color name="drawer_right_logout_hint_text_bg">#ff2bb2cf</color>
+    <color name="drawer_right_logout_hint_text_night">#ff77828f</color>
     <color name="activity_bg_color">#fff5f5f5</color>
     <color name="divider_day">#ffdddddd</color>
     <color name="white">#ffffffff</color>

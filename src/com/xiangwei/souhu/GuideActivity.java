@@ -21,6 +21,7 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.InjectViews;
 
+import com.xiangwei.souhu.R.drawable;
 import com.xiangwei.souhu.util.DensityUtils;
 import com.xiangwei.souhu.util.PrefUtils;
 
@@ -37,7 +38,7 @@ public class GuideActivity extends Activity {
 
 	// 引导页图片id数组
 	private int[] mImageIds = new int[] { R.drawable.guide_1,
-			R.drawable.guide_2 };
+			R.drawable.guide_2 ,R.drawable.guide_3};
 
 	// 小红点移动距离
 	private int mPointDis;

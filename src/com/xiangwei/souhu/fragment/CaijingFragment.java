@@ -36,7 +36,7 @@ import com.xiangwei.souhu.tool.Constants;
 import com.xiangwei.souhu.tool.GlobalConstants;
 import com.xiangwei.souhu.view.HeadListView;
 
-public class NewsFragment extends Fragment {
+public class CaijingFragment extends Fragment {
 	private final static String TAG = "NewsFragment";
 	Activity activity;
 	NewsMenu mNewsData;
@@ -122,7 +122,7 @@ public class NewsFragment extends Fragment {
 
 	public void getDataFromServer() {
 		HttpUtils utils = new HttpUtils();
-		utils.send(HttpMethod.GET, GlobalConstants.SERVER_GUOJI_URL,
+		utils.send(HttpMethod.GET, GlobalConstants.SERVER_CAIJING_URL,
 				new RequestCallBack<String>() {
 
 					@Override

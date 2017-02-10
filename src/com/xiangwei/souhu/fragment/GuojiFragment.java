@@ -36,7 +36,7 @@ import com.xiangwei.souhu.tool.Constants;
 import com.xiangwei.souhu.tool.GlobalConstants;
 import com.xiangwei.souhu.view.HeadListView;
 
-public class NewsFragment extends Fragment {
+public class GuojiFragment extends Fragment {
 	private final static String TAG = "NewsFragment";
 	Activity activity;
 	NewsMenu mNewsData;

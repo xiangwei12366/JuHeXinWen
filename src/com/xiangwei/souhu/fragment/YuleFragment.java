@@ -36,7 +36,7 @@ import com.xiangwei.souhu.tool.Constants;
 import com.xiangwei.souhu.tool.GlobalConstants;
 import com.xiangwei.souhu.view.HeadListView;
 
-public class NewsFragment extends Fragment {
+public class YuleFragment extends Fragment {
 	private final static String TAG = "NewsFragment";
 	Activity activity;
 	NewsMenu mNewsData;
@@ -76,7 +76,7 @@ public class NewsFragment extends Fragment {
 		if (isVisibleToUser) {
 			// fragment可见时加载数据
 			if (mData != null && mData.size() != 0) {
-//				handler.obtainMessage(SET_NEWSLIST).sendToTarget();
+				// handler.obtainMessage(SET_NEWSLIST).sendToTarget();
 			} else {
 				new Thread(new Runnable() {
 					@Override
@@ -88,7 +88,7 @@ public class NewsFragment extends Fragment {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
-//						handler.obtainMessage(SET_NEWSLIST).sendToTarget();
+						// handler.obtainMessage(SET_NEWSLIST).sendToTarget();
 					}
 				}).start();
 			}
@@ -122,7 +122,7 @@ public class NewsFragment extends Fragment {
 
 	public void getDataFromServer() {
 		HttpUtils utils = new HttpUtils();
-		utils.send(HttpMethod.GET, GlobalConstants.SERVER_GUOJI_URL,
+		utils.send(HttpMethod.GET, GlobalConstants.SERVER_YULE_URL,
 				new RequestCallBack<String>() {
 
 					@Override
@@ -171,76 +171,78 @@ public class NewsFragment extends Fragment {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				Intent intent = new Intent(activity, DetailsActivity.class);
-				if(channel_id == Constants.CHANNEL_CITY){
-					if(position != 0){
+				if (channel_id == Constants.CHANNEL_CITY) {
+					if (position != 0) {
 						intent.putExtra("news", mAdapter.getItem(position - 1));
 						startActivity(intent);
-						activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+						activity.overridePendingTransition(
+								R.anim.slide_in_right, R.anim.slide_out_left);
 					}
-				}else{
+				} else {
 					intent.putExtra("news", mAdapter.getItem(position));
 					startActivity(intent);
-					activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+					activity.overridePendingTransition(R.anim.slide_in_right,
+							R.anim.slide_out_left);
 				}
 			}
 		});
 	}
 
-//	Handler handler = new Handler() {
-//		@Override
-//		public void handleMessage(Message msg) {
-//			// TODO Auto-generated method stub
-//			switch (msg.what) {
-//			case SET_NEWSLIST:
-//				detail_loading.setVisibility(View.GONE);
-//				if (mAdapter == null) {
-//					mAdapter = new NewsAdapter(activity, mData);
-//					// // 判断是不是城市的频道
-//					// if (channel_id == Constants.CHANNEL_CITY) {
-//					// // 是城市频道
-//					// mAdapter.setCityChannel(true);
-//					// initCityChannel();
-//					// }
-//				}
-//				mListView.setAdapter(mAdapter);
-//				mListView.setOnScrollListener(mAdapter);
-//				mListView.setPinnedHeaderView(LayoutInflater.from(activity)
-//						.inflate(R.layout.list_item_section, mListView, false));
-//				// mListView.setOnItemClickListener(new OnItemClickListener() {
-//				//
-//				// @Override
-//				// public void onItemClick(AdapterView<?> parent, View view,
-//				// int position, long id) {
-//				// Intent intent = new Intent(activity,
-//				// DetailsActivity.class);
-//				// if (channel_id == Constants.CHANNEL_CITY) {
-//				// if (position != 0) {
-//				// intent.putExtra("news",
-//				// mAdapter.getItem(position - 1));
-//				// startActivity(intent);
-//				// activity.overridePendingTransition(
-//				// R.anim.slide_in_right,
-//				// R.anim.slide_out_left);
-//				// }
-//				// } else {
-//				// intent.putExtra("news", mAdapter.getItem(position));
-//				// startActivity(intent);
-//				// activity.overridePendingTransition(
-//				// R.anim.slide_in_right,
-//				// R.anim.slide_out_left);
-//				// }
-//				// }
-//				// });
-//				if (channel_id == 1) {
-//					initNotify();
-//				}
-//				break;
-//			default:
-//				break;
-//			}
-//			super.handleMessage(msg);
-//		}
-//	};
+	// Handler handler = new Handler() {
+	// @Override
+	// public void handleMessage(Message msg) {
+	// // TODO Auto-generated method stub
+	// switch (msg.what) {
+	// case SET_NEWSLIST:
+	// detail_loading.setVisibility(View.GONE);
+	// if (mAdapter == null) {
+	// mAdapter = new NewsAdapter(activity, mData);
+	// // // 判断是不是城市的频道
+	// // if (channel_id == Constants.CHANNEL_CITY) {
+	// // // 是城市频道
+	// // mAdapter.setCityChannel(true);
+	// // initCityChannel();
+	// // }
+	// }
+	// mListView.setAdapter(mAdapter);
+	// mListView.setOnScrollListener(mAdapter);
+	// mListView.setPinnedHeaderView(LayoutInflater.from(activity)
+	// .inflate(R.layout.list_item_section, mListView, false));
+	// // mListView.setOnItemClickListener(new OnItemClickListener() {
+	// //
+	// // @Override
+	// // public void onItemClick(AdapterView<?> parent, View view,
+	// // int position, long id) {
+	// // Intent intent = new Intent(activity,
+	// // DetailsActivity.class);
+	// // if (channel_id == Constants.CHANNEL_CITY) {
+	// // if (position != 0) {
+	// // intent.putExtra("news",
+	// // mAdapter.getItem(position - 1));
+	// // startActivity(intent);
+	// // activity.overridePendingTransition(
+	// // R.anim.slide_in_right,
+	// // R.anim.slide_out_left);
+	// // }
+	// // } else {
+	// // intent.putExtra("news", mAdapter.getItem(position));
+	// // startActivity(intent);
+	// // activity.overridePendingTransition(
+	// // R.anim.slide_in_right,
+	// // R.anim.slide_out_left);
+	// // }
+	// // }
+	// // });
+	// if (channel_id == 1) {
+	// initNotify();
+	// }
+	// break;
+	// default:
+	// break;
+	// }
+	// super.handleMessage(msg);
+	// }
+	// };
 
 	/* 初始化选择城市的header */
 	public void initCityChannel() {
