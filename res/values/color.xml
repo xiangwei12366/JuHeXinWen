@@ -117,5 +117,6 @@
     <color name="bg_login_page">#fff9f9f9</color>
     <color name="bg_full_image">#ff000000</color>
     <color name="detail_title_text_color">#ff999999</color>
+    <color name="title_bar_text_color">#ffffff</color>
 
 </resources>

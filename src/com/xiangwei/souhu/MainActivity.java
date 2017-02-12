@@ -41,7 +41,6 @@ import com.xiangwei.souhu.fragment.TopFragment;
 import com.xiangwei.souhu.fragment.YuleFragment;
 import com.xiangwei.souhu.tool.BaseTools;
 import com.xiangwei.souhu.view.ColumnHorizontalScrollView;
-import com.xiangwei.souhu.view.DrawerView;
 
 public class MainActivity extends FragmentActivity {
 	/** 自定义HorizontalScrollView */
@@ -93,54 +92,55 @@ public class MainActivity extends FragmentActivity {
 		mItemWidth = mScreenWidth / 7;// 一条的item的长度是屏幕的7/1;
 		sqlHelper = new SQLHelper(mAppApplication);
 		initView();
-		initSlidingMenu();
+		// initSlidingMenu();
 	}
 
 	/** 初始化layout控件 */
 	private void initView() {
 		mColumnHorizontalScrollView = (ColumnHorizontalScrollView) findViewById(R.id.mColumnHorizontalScrollView);
 		mRadioGroup_content = (LinearLayout) findViewById(R.id.mRadioGroup_content);
-		ll_more_columns = (LinearLayout) findViewById(R.id.ll_more_columns);
+		// ll_more_columns = (LinearLayout) findViewById(R.id.ll_more_columns);
 		rl_column = (RelativeLayout) findViewById(R.id.rl_column);
-		button_more_columns = (ImageView) findViewById(R.id.buttom_more_columns);
+		// button_more_columns = (ImageView)
+		// findViewById(R.id.buttom_more_columns);
 		mViewPager = (ViewPager) findViewById(R.id.mViewPager);
 		shade_left = (ImageView) findViewById(R.id.shade_left);
 		shade_right = (ImageView) findViewById(R.id.shade_right);
-		top_head = (ImageView) findViewById(R.id.top_head);
-		top_more = (ImageView) findViewById(R.id.top_more);
-		top_refresh = (ImageView) findViewById(R.id.top_refresh);
+		// top_head = (ImageView) findViewById(R.id.top_head);
+		// top_more = (ImageView) findViewById(R.id.top_more);
+		// top_refresh = (ImageView) findViewById(R.id.top_refresh);
 		top_progress = (ProgressBar) findViewById(R.id.top_progress);
-		button_more_columns.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-
-			}
-		});
-		top_head.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				if (side_drawer.isMenuShowing()) {
-					side_drawer.showContent();
-				} else {
-					side_drawer.showMenu();
-				}
-			}
-		});
-		top_more.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				if (side_drawer.isSecondaryMenuShowing()) {
-					side_drawer.showContent();
-				} else {
-					side_drawer.showSecondaryMenu();
-				}
-			}
-		});
+		// button_more_columns.setOnClickListener(new OnClickListener() {
+		//
+		// @Override
+		// public void onClick(View v) {
+		//
+		// }
+		// });
+		// top_head.setOnClickListener(new OnClickListener() {
+		//
+		// @Override
+		// public void onClick(View v) {
+		// // TODO Auto-generated method stub
+		// if (side_drawer.isMenuShowing()) {
+		// side_drawer.showContent();
+		// } else {
+		// side_drawer.showMenu();
+		// }
+		// }
+		// });
+		// top_more.setOnClickListener(new OnClickListener() {
+		//
+		// @Override
+		// public void onClick(View v) {
+		// // TODO Auto-generated method stub
+		// if (side_drawer.isSecondaryMenuShowing()) {
+		// side_drawer.showContent();
+		// } else {
+		// side_drawer.showSecondaryMenu();
+		// }
+		// }
+		// });
 		initFragmentList();
 		setChangelView();
 	}
@@ -163,7 +163,7 @@ public class MainActivity extends FragmentActivity {
 		fragmentList.add(guojiFragment);
 		fragmentList.add(yuleFragment);
 		fragmentList.add(tiyuFragment);
-//		fragmentList.add(junshiFragment);
+		// fragmentList.add(junshiFragment);
 		fragmentList.add(kejiFragment);
 		fragmentList.add(caijingFragment);
 		fragmentList.add(shishangFragment);
@@ -351,8 +351,8 @@ public class MainActivity extends FragmentActivity {
 		super.onActivityResult(requestCode, resultCode, data);
 	}
 
-	private void initSlidingMenu() {
-		side_drawer = new DrawerView(this).initSlidingMenu();
-	}
+	// private void initSlidingMenu() {
+	// side_drawer = new DrawerView(this).initSlidingMenu();
+	// }
 
 }

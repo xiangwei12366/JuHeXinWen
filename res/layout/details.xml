@@ -23,9 +23,9 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true" >
 
-        <include
+        <!-- <include
             android:id="@+id/tool_bar"
-            layout="@layout/tool_bar" />
+            layout="@layout/tool_bar" /> -->
     </FrameLayout>
 
     <!-- <com.ss.android.common.ui.view.SwipeOverlayFrameLayout -->

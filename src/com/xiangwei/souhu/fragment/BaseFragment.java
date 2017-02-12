@@ -2,11 +2,13 @@ package com.xiangwei.souhu.fragment;
 
 import java.util.ArrayList;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,7 +38,8 @@ import com.xiangwei.souhu.tool.Constants;
 import com.xiangwei.souhu.tool.GlobalConstants;
 import com.xiangwei.souhu.view.HeadListView;
 
-public class NewsFragment extends Fragment {
+public abstract class BaseFragment extends Fragment {
+	private final static int REFRESH_COMPLETE = 0X110;
 	private final static String TAG = "NewsFragment";
 	Activity activity;
 	NewsMenu mNewsData;
@@ -51,6 +54,16 @@ public class NewsFragment extends Fragment {
 	// Toast提示框
 	private RelativeLayout notify_view;
 	private TextView notify_view_text;
+
+	// Handler mHandler = new Handler() {
+	// public void handleMessage(android.os.Message msg) {
+	// switch (msg.what) {
+	// case REFRESH_COMPLETE:
+	// System.out.println("XXXXXXXXXXXXXXX刷新!!!!=================");
+	// break;
+	// }
+	// }
+	// };
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -76,7 +89,7 @@ public class NewsFragment extends Fragment {
 		if (isVisibleToUser) {
 			// fragment可见时加载数据
 			if (mData != null && mData.size() != 0) {
-//				handler.obtainMessage(SET_NEWSLIST).sendToTarget();
+				// handler.obtainMessage(SET_NEWSLIST).sendToTarget();
 			} else {
 				new Thread(new Runnable() {
 					@Override
@@ -88,7 +101,7 @@ public class NewsFragment extends Fragment {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
-//						handler.obtainMessage(SET_NEWSLIST).sendToTarget();
+						// handler.obtainMessage(SET_NEWSLIST).sendToTarget();
 					}
 				}).start();
 			}
@@ -103,7 +116,7 @@ public class NewsFragment extends Fragment {
 			Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		View view = LayoutInflater.from(getActivity()).inflate(
-				R.layout.fragment_news, null);
+				R.layout.fragment_base, null);
 		mListView = (HeadListView) view.findViewById(R.id.mListView);
 		TextView item_textview = (TextView) view
 				.findViewById(R.id.item_textview);
@@ -115,132 +128,131 @@ public class NewsFragment extends Fragment {
 		return view;
 	}
 
-	private void initData() {
-		// newsList = Constants.getNewsList();
-		getDataFromServer();
-	}
+	protected abstract void initData();
 
-	public void getDataFromServer() {
-		HttpUtils utils = new HttpUtils();
-		utils.send(HttpMethod.GET, GlobalConstants.SERVER_GUOJI_URL,
-				new RequestCallBack<String>() {
-
-					@Override
-					public void onSuccess(ResponseInfo<String> responseInfo) {
-						// 请求成功
-						String result = responseInfo.result;// 获取服务器返回结果
-						System.out.println("服务器返回结果:" + result);
-
-						// JsonObject, Gson
-						processData(result);
-
-						/*
-						 * // 写缓存
-						 * CacheUtils.setCache(GlobalConstants.CATEGORY_URL,
-						 * result, mActivity);
-						 */
-					}
-
-					@Override
-					public void onFailure(HttpException error, String msg) {
-						// 请求失败
-						error.printStackTrace();
-						Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT)
-								.show();
-					}
-				});
-	}
+//	public void getDataFromServer() {
+//		HttpUtils utils = new HttpUtils();
+//		utils.send(HttpMethod.GET, GlobalConstants.SERVER_GUOJI_URL,
+//				new RequestCallBack<String>() {
+//
+//					@Override
+//					public void onSuccess(ResponseInfo<String> responseInfo) {
+//						// 请求成功
+//						String result = responseInfo.result;// 获取服务器返回结果
+//						System.out.println("服务器返回结果:" + result);
+//
+//						// JsonObject, Gson
+//						processData(result);
+//
+//						/*
+//						 * // 写缓存
+//						 * CacheUtils.setCache(GlobalConstants.CATEGORY_URL,
+//						 * result, mActivity);
+//						 */
+//					}
+//
+//					@Override
+//					public void onFailure(HttpException error, String msg) {
+//						// 请求失败
+//						error.printStackTrace();
+//						Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT)
+//								.show();
+//					}
+//				});
+//	}
 
 	/**
 	 * 解析数据
 	 */
-	protected void processData(String json) {
-		// Gson: Google Json
-		Gson gson = new Gson();
-		mNewsData = gson.fromJson(json, NewsMenu.class);
-		mResult = mNewsData.getResults();
-		mData = mResult.getData();
-		mAdapter = new NewsAdapter(activity, mData);
-		mListView.setAdapter(mAdapter);
-		mListView.setOnScrollListener(mAdapter);
-		mListView.setPinnedHeaderView(LayoutInflater.from(activity).inflate(
-				R.layout.list_item_section, mListView, false));
-		mListView.setOnItemClickListener(new OnItemClickListener() {
-
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view,
-					int position, long id) {
-				Intent intent = new Intent(activity, DetailsActivity.class);
-				if(channel_id == Constants.CHANNEL_CITY){
-					if(position != 0){
-						intent.putExtra("news", mAdapter.getItem(position - 1));
-						startActivity(intent);
-						activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-					}
-				}else{
-					intent.putExtra("news", mAdapter.getItem(position));
-					startActivity(intent);
-					activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-				}
-			}
-		});
-	}
-
-//	Handler handler = new Handler() {
-//		@Override
-//		public void handleMessage(Message msg) {
-//			// TODO Auto-generated method stub
-//			switch (msg.what) {
-//			case SET_NEWSLIST:
-//				detail_loading.setVisibility(View.GONE);
-//				if (mAdapter == null) {
-//					mAdapter = new NewsAdapter(activity, mData);
-//					// // 判断是不是城市的频道
-//					// if (channel_id == Constants.CHANNEL_CITY) {
-//					// // 是城市频道
-//					// mAdapter.setCityChannel(true);
-//					// initCityChannel();
-//					// }
+//	protected void processData(String json) {
+//		// Gson: Google Json
+//		Gson gson = new Gson();
+//		mNewsData = gson.fromJson(json, NewsMenu.class);
+//		mResult = mNewsData.getResults();
+//		mData = mResult.getData();
+//		mAdapter = new NewsAdapter(activity, mData);
+//		mListView.setAdapter(mAdapter);
+//		mListView.setOnScrollListener(mAdapter);
+//		mListView.setPinnedHeaderView(LayoutInflater.from(activity).inflate(
+//				R.layout.list_item_section, mListView, false));
+//		mListView.setOnItemClickListener(new OnItemClickListener() {
+//
+//			@Override
+//			public void onItemClick(AdapterView<?> parent, View view,
+//					int position, long id) {
+//				Intent intent = new Intent(activity, DetailsActivity.class);
+//				if (channel_id == Constants.CHANNEL_CITY) {
+//					if (position != 0) {
+//						intent.putExtra("news", mAdapter.getItem(position - 1));
+//						startActivity(intent);
+//						activity.overridePendingTransition(
+//								R.anim.slide_in_right, R.anim.slide_out_left);
+//					}
+//				} else {
+//					intent.putExtra("news", mAdapter.getItem(position));
+//					startActivity(intent);
+//					activity.overridePendingTransition(R.anim.slide_in_right,
+//							R.anim.slide_out_left);
 //				}
-//				mListView.setAdapter(mAdapter);
-//				mListView.setOnScrollListener(mAdapter);
-//				mListView.setPinnedHeaderView(LayoutInflater.from(activity)
-//						.inflate(R.layout.list_item_section, mListView, false));
-//				// mListView.setOnItemClickListener(new OnItemClickListener() {
-//				//
-//				// @Override
-//				// public void onItemClick(AdapterView<?> parent, View view,
-//				// int position, long id) {
-//				// Intent intent = new Intent(activity,
-//				// DetailsActivity.class);
-//				// if (channel_id == Constants.CHANNEL_CITY) {
-//				// if (position != 0) {
-//				// intent.putExtra("news",
-//				// mAdapter.getItem(position - 1));
-//				// startActivity(intent);
-//				// activity.overridePendingTransition(
-//				// R.anim.slide_in_right,
-//				// R.anim.slide_out_left);
-//				// }
-//				// } else {
-//				// intent.putExtra("news", mAdapter.getItem(position));
-//				// startActivity(intent);
-//				// activity.overridePendingTransition(
-//				// R.anim.slide_in_right,
-//				// R.anim.slide_out_left);
-//				// }
-//				// }
-//				// });
-//				if (channel_id == 1) {
-//					initNotify();
-//				}
-//				break;
-//			default:
-//				break;
 //			}
-//			super.handleMessage(msg);
-//		}
-//	};
+//		});
+//	}
+
+	// Handler handler = new Handler() {
+	// @Override
+	// public void handleMessage(Message msg) {
+	// // TODO Auto-generated method stub
+	// switch (msg.what) {
+	// case SET_NEWSLIST:
+	// detail_loading.setVisibility(View.GONE);
+	// if (mAdapter == null) {
+	// mAdapter = new NewsAdapter(activity, mData);
+	// // // 判断是不是城市的频道
+	// // if (channel_id == Constants.CHANNEL_CITY) {
+	// // // 是城市频道
+	// // mAdapter.setCityChannel(true);
+	// // initCityChannel();
+	// // }
+	// }
+	// mListView.setAdapter(mAdapter);
+	// mListView.setOnScrollListener(mAdapter);
+	// mListView.setPinnedHeaderView(LayoutInflater.from(activity)
+	// .inflate(R.layout.list_item_section, mListView, false));
+	// // mListView.setOnItemClickListener(new OnItemClickListener() {
+	// //
+	// // @Override
+	// // public void onItemClick(AdapterView<?> parent, View view,
+	// // int position, long id) {
+	// // Intent intent = new Intent(activity,
+	// // DetailsActivity.class);
+	// // if (channel_id == Constants.CHANNEL_CITY) {
+	// // if (position != 0) {
+	// // intent.putExtra("news",
+	// // mAdapter.getItem(position - 1));
+	// // startActivity(intent);
+	// // activity.overridePendingTransition(
+	// // R.anim.slide_in_right,
+	// // R.anim.slide_out_left);
+	// // }
+	// // } else {
+	// // intent.putExtra("news", mAdapter.getItem(position));
+	// // startActivity(intent);
+	// // activity.overridePendingTransition(
+	// // R.anim.slide_in_right,
+	// // R.anim.slide_out_left);
+	// // }
+	// // }
+	// // });
+	// if (channel_id == 1) {
+	// initNotify();
+	// }
+	// break;
+	// default:
+	// break;
+	// }
+	// super.handleMessage(msg);
+	// }
+	// };
 
 	/* 初始化选择城市的header */
 	public void initCityChannel() {
@@ -298,4 +310,5 @@ public class NewsFragment extends Fragment {
 		super.onDestroy();
 		Log.d(TAG, "channel_id = " + channel_id);
 	}
+
 }
